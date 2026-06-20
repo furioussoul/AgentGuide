@@ -1,13 +1,7 @@
-# Demo Project
+# Empty Demo Workspace
 
-This intentionally contains one small bug for the course demo.
+This workspace is intentionally empty.
 
-Task for the agent:
+Try:
 
-> 修复满 100 元仍收取运费的 Bug，并运行测试。
-
-Reset it with:
-
-```bash
-npm run reset-demo
-```
+> 用 HTML 写一个贪吃蛇游戏，并运行测试。

@@ -1,16 +1,18 @@
 import type { AgentTool } from "./types.js";
-import { listFilesTool } from "./list-files.js";
-import { readFileTool } from "./read-file.js";
-import { searchTextTool } from "./search-text.js";
-import { replaceInFileTool } from "./replace-in-file.js";
-import { runCommandTool } from "./run-command.js";
+import { readTool } from "./read.js";
+import { writeTool } from "./write.js";
+import { editTool } from "./edit.js";
+import { globTool } from "./glob.js";
+import { grepTool } from "./grep.js";
+import { bashTool } from "./bash.js";
 
 export const tools: AgentTool[] = [
-  listFilesTool,
-  readFileTool,
-  searchTextTool,
-  replaceInFileTool,
-  runCommandTool,
+  readTool,
+  writeTool,
+  editTool,
+  globTool,
+  grepTool,
+  bashTool,
 ];
 
 export const toolsByName = new Map(tools.map((tool) => [tool.definition.name, tool]));

@@ -7,9 +7,9 @@
 - OpenAI-compatible 模型接口，基于 Vercel AI SDK 接入。
 - 单页 Coding Agent 工作台，支持 Markdown 消息展示。
 - Agent Loop 支持工具调用、工具结果回填、上下文裁剪和步数上限。
-- 五个代码工具：`list_files`、`read_file`、`search_text`、`replace_in_file`、`run_command`。
+- 六个代码工具：`read`、`write`、`edit`、`glob`、`grep`、`bash`。
 - Workspace 沙箱限制，所有文件操作都被约束在 `WORKSPACE_DIR` 内。
-- 命令允许列表限制，默认只允许在 demo 项目里运行 `npm test`。
+- 命令允许列表限制，`bash` 只能运行 `ALLOWED_COMMANDS` 中的命令。
 - 实时执行轨迹面板，支持模型、工具、运行、错误分类筛选。
 - 浏览器刷新后保留当前对话和执行记录；运行中刷新会自动重连 SSE，继续接收后续消息。
 
@@ -28,7 +28,7 @@ OPENAI_API_KEY=replace_me
 OPENAI_MODEL=replace_me
 PORT=3000
 WORKSPACE_DIR=./demo-project
-ALLOWED_COMMANDS=npm test
+ALLOWED_COMMANDS=npm test,node --test,npm run test,npm run build,npm run check,bun test
 ```
 
 安装依赖并启动：
@@ -48,7 +48,7 @@ bun dev
 打开 `http://localhost:3000`，输入代码任务，例如：
 
 ```text
-用html、ts写一个贪吃蛇，并运行测试。
+用 HTML 写一个贪吃蛇游戏，并运行测试。
 ```
 
 ## 常用命令
@@ -69,9 +69,9 @@ npm run reset-demo # 重置 demo-project
   src/
     agent/         # Agent Loop、上下文和系统提示词
     model/         # Vercel AI SDK 模型适配
-    tools/         # 五个代码工具
+    tools/         # 六个代码工具
     server.ts      # Express、SSE、运行重连
-  demo-project/    # 默认被 Agent 操作的示例项目
+  demo-project/    # 默认被 Agent 操作的空工作区
   test/            # 工具和 Agent Loop 测试
 ```
 
@@ -91,11 +91,12 @@ Agent Loop
   |
   +-- Tool Registry
         |
-        +-- list_files
-        +-- read_file
-        +-- search_text
-        +-- replace_in_file
-        +-- run_command
+        +-- read
+        +-- write
+        +-- edit
+        +-- glob
+        +-- grep
+        +-- bash
 ```
 
-每次任务都会生成一条 run，并把状态、模型调用、工具调用、工具结果和最终回复推送到前端。前端会把对话、轨迹和当前 run 游标保存到 `localStorage`，因此刷新页面后可以恢复视图；如果任务仍在运行，会用 run id 和序号继续订阅未接收的事件。
+每次任务都会生成一条 run，并把状态、模型调用、工具调用、工具结果和最终回复推送到前端。前端会把对话、轨迹和当前 run 游标保存到 `localStorage`，因此刷新页面后可以恢复视图；如果任务仍在运行，会用 run id 和序号继续订阅未接收的事件。默认 `demo-project` 是空工作区，Agent 需要自己创建文件、测试和最小项目结构。

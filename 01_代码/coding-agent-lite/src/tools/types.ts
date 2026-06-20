@@ -3,6 +3,7 @@ import type { ToolDefinition } from "../model/types.js";
 export interface ToolContext {
   workspaceRoot: string;
   allowedCommands: string[];
+  sessionId?: string;
 }
 
 export interface ToolExecutionResult {

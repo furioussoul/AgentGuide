@@ -6,6 +6,7 @@ import { tools } from "./tools/index.js";
 import { TraceRecorder, type TraceEvent } from "./trace.js";
 import { runAgentLoop } from "./agent/agent-loop.js";
 import { SessionStore } from "./agent/session-store.js";
+import { clearFileBaselines } from "./tools/file-state.js";
 
 const app = express();
 const sessions = new SessionStore();
@@ -124,6 +125,7 @@ function startAgentRun(sessionId: string, message: string): ActiveRun {
         toolContext: {
           workspaceRoot: config.workspaceDir,
           allowedCommands: config.allowedCommands,
+          sessionId,
         },
         trace,
         maxSteps: config.maxAgentSteps,
@@ -180,6 +182,7 @@ app.post("/api/reset", (request, response) => {
   if (sessionId) {
     sessions.clear(sessionId);
     activeRunBySession.delete(sessionId);
+    clearFileBaselines(sessionId);
   }
   response.json({ ok: true });
 });
