@@ -1,0 +1,20 @@
+# Ignore everything in the release workspace by default.
+*
+
+# Keep repository metadata and the public project README.
+!.gitignore
+!README.md
+
+# Publish only the runnable code project.
+!01_代码/
+01_代码/*
+!01_代码/coding-agent-lite/
+!01_代码/coding-agent-lite/**
+
+# Local secrets, dependencies, build output, and runtime traces.
+**/.DS_Store
+01_代码/coding-agent-lite/.env
+01_代码/coding-agent-lite/node_modules/
+01_代码/coding-agent-lite/dist/
+01_代码/coding-agent-lite/runtime-data/
+01_代码/coding-agent-lite/demo-project/node_modules/

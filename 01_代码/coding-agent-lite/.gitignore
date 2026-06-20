@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.env
+runtime-data/traces/*.jsonl
+!runtime-data/traces/.gitkeep
+demo-project/node_modules/

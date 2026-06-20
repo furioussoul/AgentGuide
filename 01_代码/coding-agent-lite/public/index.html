@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Agent Lite</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="layout">
+        <section class="chat-panel">
+          <div id="messages" class="messages"></div>
+
+          <form id="chatForm" class="composer">
+            <textarea id="messageInput" rows="3" placeholder="输入要完成的代码任务……"></textarea>
+            <div class="composer-actions">
+              <button id="sendButton" type="submit">提交</button>
+              <button id="resetButton" class="ghost" type="button">新对话</button>
+            </div>
+          </form>
+        </section>
+
+        <aside class="trace-panel">
+          <div class="trace-console">
+            <div class="trace-stats" aria-label="轨迹摘要">
+              <span><strong id="traceCount">0</strong> 条记录</span>
+              <span><span id="statusBadge" class="badge inline">待命</span><span id="traceLatest">等待运行</span></span>
+            </div>
+            <div id="traceFilters" class="trace-filters" role="group" aria-label="筛选执行轨迹">
+              <button class="trace-filter active" type="button" data-filter="all">全部</button>
+              <button class="trace-filter" type="button" data-filter="model">模型</button>
+              <button class="trace-filter" type="button" data-filter="tool">工具</button>
+              <button class="trace-filter" type="button" data-filter="run">运行</button>
+              <button class="trace-filter" type="button" data-filter="error">错误</button>
+            </div>
+            <button id="clearTraceButton" class="trace-clear" type="button">清空</button>
+          </div>
+          <div id="traceList" class="trace-list">
+            <p class="trace-empty">模型调用、文件操作和验证结果会显示在这里。</p>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
